@@ -1,9 +1,19 @@
+* bash profile order
+~/.bash_profile -> ~/.bash_login -> ~/.profile
+
+PATH="${PATH}:$HOME/bin"
+
+also /etc/profile, /etc/bashrc, /etc/rc, /etc/default/login, ~/.ssh/environment, /etc/environment
+
+# grep -l PATH ~/.[^.]*
+
 merge
 # cat content-1 content-2 > content-all
 
 all files in one line
 # ls -C > /tmp/save.out
 
+standard output and error output to a separate file
 # myapp 1> std.out 2> err.out
 
 error output
@@ -18,6 +28,7 @@ skip the first line
 * do not show any in output
 # myscript > /dev/null 2>&1
 
+all command output to the same file
 # { pwd; ls -l; cd ~: ls -l; } > /tmp/all.out
 
 saving output to a file while using it as input
@@ -43,10 +54,44 @@ prompting
 all at once
 # command 1 & command 2 & command 3
 
+check success or failure of a previous command run
 # echo $?
 
 # cd mydir
 # if (( $? == 0 )); then ls -l ; fi
 
+nohup
 # nohup myscript.sh &
 
+rename many files
+for FN in *.bad
+do
+    mv "${FN}" "${FN%bad}bash"
+done
+
+unzip many zip files
+# unzip '*.zip'
+=
+for x in /tmp/*.zip; do unzip "$x"; done
+=
+for x in $(ls /tmp/*.zip 2>/dev/null); do unzip $x; done
+
+* diff
+# diff -y -W 60 left.out right.out
+# diff -y -W 60 --suppress-common-lines left.out right.out
+only show lines in the left file
+# comm -23 left right
+only show lines in the right file
+# comm -13 left right
+only show lines common to both files
+# comm -12 left right
+
+* view
+# view filename
+:set nu!
+
+stack
+# pushd /tmp
+# dirs -v
+# popd
+# dirs -v
